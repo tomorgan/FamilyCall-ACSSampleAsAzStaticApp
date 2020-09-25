@@ -20,24 +20,7 @@ export default (props: MediaFullScreenProps): JSX.Element => {
 
   const activeScreenShareStream = props.activeScreenShareStream;
 
-  const renderStream = async () => {
-    let rendererView: RendererView;
-    if (activeScreenShareStream && activeScreenShareStream.stream) {
-      let stream: RemoteVideoStream = activeScreenShareStream.stream;
-      var renderer: Renderer = new Renderer(stream);
-      rendererView = await renderer.createView({ scalingMode: 'Fit' });
-
-      let container = document.getElementById(fullScreenStreamMediaId);
-      if (container && container.childElementCount === 0) {
-        setLoading(false);
-        container.appendChild(rendererView.target);
-      }
-    } else {
-      // if (rendererView) {
-      //   rendererView.dispose();
-      // }
-    }
-  };
+  
   useEffect(() => {
     //renderStream();
     let rendererView: RendererView;
@@ -61,7 +44,7 @@ export default (props: MediaFullScreenProps): JSX.Element => {
     };
 renderStream();
 
-  }, [activeScreenShareStream, renderStream]);
+  }, [activeScreenShareStream]);
 
   const displayName =
     props.activeScreenShareStream.user.displayName ?? utils.getId(props.activeScreenShareStream.user.identifier);
