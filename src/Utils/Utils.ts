@@ -22,6 +22,13 @@ export const utils = {
     }
     throw new Error('Invalid token response');
   },
+  getGroupID: async (): Promise<any> => {
+    const response = await fetch('/api/getGroupId');
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error('Invalid token response');
+  },
   isSelectedAudioDeviceInList(selected: AudioDeviceInfo, list: AudioDeviceInfo[]): boolean {
     return list.filter((item) => item.name === selected.name).length > 0;
   },

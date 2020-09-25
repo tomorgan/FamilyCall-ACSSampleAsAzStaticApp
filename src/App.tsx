@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import EndCall from './components/EndCall';
 import HomeScreen from './components/HomeScreen';
 import ConfigurationScreen from './containers/Configuration';
-import { v1 as createGUID } from 'uuid';
+
 import { loadTheme, initializeIcons } from '@fluentui/react';
 import { utils } from './Utils/Utils';
 
@@ -21,7 +21,7 @@ initializeIcons();
 const store = createStore(reducer, applyMiddleware(thunk));
 const App = () => {
   const [page, setPage] = useState('home');
-  const [groupId, setGroupId] = useState('');
+  // const [groupId, setGroupId] = useState('');
   const [screenWidth, setScreenWidth] = useState(0);
 
   useEffect(() => {
@@ -36,19 +36,23 @@ const App = () => {
 
   const createUserId = () => 'user' + Math.ceil(Math.random() * 1000);
 
-  const getGroupIdFromUrl = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('groupId');
-  };
+  // const getGroupIdFromUrl = () => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   return urlParams.get('groupId');
+  // };
+
+  // const getGroupId = () => {
+  //   if (groupId) return groupId;
+  //   const uri_gid = getGroupIdFromUrl();
+  //   const gid = uri_gid == null || uri_gid === '' ? createGUID() : uri_gid;
+  //   console.log('The group id is ' + gid);
+  //   setGroupId(gid);
+  //   return gid;
+  // };
 
   const getGroupId = () => {
-    if (groupId) return groupId;
-    const uri_gid = getGroupIdFromUrl();
-    const gid = uri_gid == null || uri_gid === '' ? createGUID() : uri_gid;
-    console.log('The group id is ' + gid);
-    setGroupId(gid);
-    return gid;
-  };
+    return utils.getGroupID();
+  }
 
   const getContent = () => {
     if (page === 'home') {
@@ -102,9 +106,9 @@ const App = () => {
     }
   };
 
-  if (getGroupIdFromUrl() && page === 'home') {
-    setPage('configuration');
-  }
+  // if (getGroupIdFromUrl() && page === 'home') {
+  //   setPage('configuration');
+  // }
 
   if (utils.isMobileSession() || utils.isSmallScreen()) {
     console.log('ACS Calling sample: This is experimental behaviour');
