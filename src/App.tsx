@@ -36,10 +36,10 @@ const App = () => {
 
   const createUserId = () => 'user' + Math.ceil(Math.random() * 1000);
 
-  // const getGroupIdFromUrl = () => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   return urlParams.get('groupId');
-  // };
+  const getGroupIdFromUrl = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('groupId');
+  };
 
   // const getGroupId = () => {
   //   if (groupId) return groupId;
@@ -108,9 +108,9 @@ const App = () => {
     }
   };
 
-  // if (getGroupIdFromUrl() && page === 'home') {
-  //   setPage('configuration');
-  // }
+  if (getGroupIdFromUrl() && page === 'home') {
+    setPage('configuration');
+  }
 
   if (utils.isMobileSession() || utils.isSmallScreen()) {
     console.log('ACS Calling sample: This is experimental behaviour');
