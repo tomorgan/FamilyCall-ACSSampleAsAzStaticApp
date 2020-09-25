@@ -4,6 +4,8 @@
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Communication.Administration" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.Communication.Common" Version="1.0.0-beta.1" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" />
   </ItemGroup>
   <ItemGroup>

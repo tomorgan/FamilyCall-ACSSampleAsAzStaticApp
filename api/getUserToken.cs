@@ -7,29 +7,40 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Azure;
+using Azure.Communication;
+using Azure.Communication.Administration;
+using Azure.Communication.Administration.Models;
 
 namespace ThoughtStuff.AzureCommsServices
 {
     public static class getUSerToken
     {
+       
+
+        
+
         [FunctionName("getUserToken")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+           string userID = req.Query["userID"];
+          CommunicationIdentityClient _client = new CommunicationIdentityClient(Environment.GetEnvironmentVariable("ACS_Connection_String"));
 
-            string name = req.Query["name"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+        log.LogInformation("API function processed a request." + userID);
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+           
+                Response<CommunicationUser> userResponse = await _client.CreateUserAsync();
+                CommunicationUser user = userResponse.Value;
+                Response<CommunicationUserToken> tokenResponse =
+                    await _client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.VoIP });
+                string token = tokenResponse.Value.Token;
+                DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+                return new OkObjectResult(tokenResponse);
+            
+            
         }
     }
 }

@@ -14,7 +14,7 @@ export interface RemoteStreamMediaProps {
 }
 
 export default (props: RemoteStreamMediaProps): JSX.Element => {
-
+  let rendererView: RendererView;
 
   let streamId = props.stream ? utils.getStreamId(props.label, props.stream) : `${props.label} - no stream`;
 
@@ -28,42 +28,39 @@ export default (props: RemoteStreamMediaProps): JSX.Element => {
 
   const stream = props.stream;
 
-  
+  const renderStream = async () => {
+    var container = document.getElementById(streamId);
+
+    if (container && props.stream && props.stream.isAvailable) {
+      setAvailable(true);
+
+      var renderer: Renderer = new Renderer(props.stream);
+      rendererView = await renderer.createView({ scalingMode: 'Crop' });
+
+      // we need to check if the stream is available still and if the id is what we expect
+      if (container && container.childElementCount === 0) {
+        container.appendChild(rendererView.target);
+      }
+    } else {
+      setAvailable(false);
+
+      if (rendererView) {
+        rendererView.dispose();
+      }
+    }
+  };
 
   useEffect(() => {
     if (!stream) {
       return;
     }
 
-    const renderStream = async () => {
-      var container = document.getElementById(streamId);
-      let rendererView: RendererView;
-  
-      if (container && props.stream && props.stream.isAvailable) {
-        setAvailable(true);
-  
-        var renderer: Renderer = new Renderer(props.stream);
-        rendererView = await renderer.createView({ scalingMode: 'Crop' });
-  
-        // we need to check if the stream is available still and if the id is what we expect
-        if (container && container.childElementCount === 0) {
-          container.appendChild(rendererView.target);
-        }
-      } else {
-        setAvailable(false);
-  
-        // if (rendererView) {
-        //   rendererView.dispose();
-        // }
-      }
-    };
-
     stream.on('availabilityChanged', renderStream);
 
     if (stream.isAvailable) {
       renderStream();
     }
-  }, [stream]);
+  }, [stream, renderStream]);
 
   return (
     <div className={mediaContainer}>
