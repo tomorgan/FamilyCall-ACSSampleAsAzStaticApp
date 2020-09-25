@@ -51,7 +51,9 @@ const App = () => {
   // };
 
   const getGroupId = () => {
-    return utils.getGroupID();
+    utils.getGroupID().then(response => {
+    return response;
+    });
   }
 
   const getContent = () => {
