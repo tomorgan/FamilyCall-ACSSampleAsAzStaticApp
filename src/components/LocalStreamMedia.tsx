@@ -13,7 +13,7 @@ export interface LocalStreamMediaProps {
 }
 
 export default (props: LocalStreamMediaProps): JSX.Element => {
-  let rendererView: RendererView;
+  
 
   const [available, setAvailable] = useState(false);
 
@@ -24,6 +24,8 @@ export default (props: LocalStreamMediaProps): JSX.Element => {
   };
 
   useEffect(() => {
+    let rendererView: RendererView ;
+
     (async () => {
       if (props.stream) {
         var renderer: Renderer = new Renderer(props.stream);
@@ -36,10 +38,10 @@ export default (props: LocalStreamMediaProps): JSX.Element => {
           setAvailable(true);
         }
       } else {
-        if (rendererView) {
-          rendererView.dispose();
+       // if (rendererView) {
+         // rendererView.dispose();
           setAvailable(false);
-        }
+        //}
       }
     })();
 

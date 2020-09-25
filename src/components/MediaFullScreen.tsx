@@ -12,7 +12,7 @@ export interface MediaFullScreenProps {
 export default (props: MediaFullScreenProps): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const fullScreenStreamMediaId = 'fullScreenStreamMediaId';
-  let rendererView: RendererView;
+  
 
   /**
    * Start stream after DOM has rendered
@@ -21,6 +21,7 @@ export default (props: MediaFullScreenProps): JSX.Element => {
   const activeScreenShareStream = props.activeScreenShareStream;
 
   const renderStream = async () => {
+    let rendererView: RendererView;
     if (activeScreenShareStream && activeScreenShareStream.stream) {
       let stream: RemoteVideoStream = activeScreenShareStream.stream;
       var renderer: Renderer = new Renderer(stream);
@@ -32,14 +33,14 @@ export default (props: MediaFullScreenProps): JSX.Element => {
         container.appendChild(rendererView.target);
       }
     } else {
-      if (rendererView) {
-        rendererView.dispose();
-      }
+      // if (rendererView) {
+      //   rendererView.dispose();
+      // }
     }
   };
   useEffect(() => {
     //renderStream();
-
+    let rendererView: RendererView;
 
     const renderStream = async () => {
       if (activeScreenShareStream && activeScreenShareStream.stream) {

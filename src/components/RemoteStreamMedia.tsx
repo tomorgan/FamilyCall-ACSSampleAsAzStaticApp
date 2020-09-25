@@ -55,6 +55,28 @@ export default (props: RemoteStreamMediaProps): JSX.Element => {
       return;
     }
 
+    const renderStream = async () => {
+      var container = document.getElementById(streamId);
+  
+      if (container && props.stream && props.stream.isAvailable) {
+        setAvailable(true);
+  
+        var renderer: Renderer = new Renderer(props.stream);
+        rendererView = await renderer.createView({ scalingMode: 'Crop' });
+  
+        // we need to check if the stream is available still and if the id is what we expect
+        if (container && container.childElementCount === 0) {
+          container.appendChild(rendererView.target);
+        }
+      } else {
+        setAvailable(false);
+  
+        if (rendererView) {
+          rendererView.dispose();
+        }
+      }
+    };
+
     stream.on('availabilityChanged', renderStream);
 
     if (stream.isAvailable) {
