@@ -14,7 +14,7 @@ export interface RemoteStreamMediaProps {
 }
 
 export default (props: RemoteStreamMediaProps): JSX.Element => {
-  let rendererView: RendererView;
+
 
   let streamId = props.stream ? utils.getStreamId(props.label, props.stream) : `${props.label} - no stream`;
 
@@ -37,6 +37,7 @@ export default (props: RemoteStreamMediaProps): JSX.Element => {
 
     const renderStream = async () => {
       var container = document.getElementById(streamId);
+      let rendererView: RendererView;
   
       if (container && props.stream && props.stream.isAvailable) {
         setAvailable(true);
@@ -51,9 +52,9 @@ export default (props: RemoteStreamMediaProps): JSX.Element => {
       } else {
         setAvailable(false);
   
-        if (rendererView) {
-          rendererView.dispose();
-        }
+        // if (rendererView) {
+        //   rendererView.dispose();
+        // }
       }
     };
 
