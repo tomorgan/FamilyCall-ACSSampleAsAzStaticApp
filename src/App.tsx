@@ -20,9 +20,8 @@ initializeIcons();
 
 const store = createStore(reducer, applyMiddleware(thunk));
 const App = () => {
-  const [page, setPage] = useState('home');
-  // const [groupId, setGroupId] = useState('');
-  const [screenWidth, setScreenWidth] = useState(0);
+const [page, setPage] = useState('home');
+const [screenWidth, setScreenWidth] = useState(0);
 
   useEffect(() => {
     const setWindowWidth = () => {
@@ -36,51 +35,35 @@ const App = () => {
 
   const createUserId = () => 'user' + Math.ceil(Math.random() * 1000);
 
-  const getGroupIdFromUrl = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('groupId');
-  };
-
-  // const getGroupId = () => {
-  //   if (groupId) return groupId;
-  //   const uri_gid = getGroupIdFromUrl();
-  //   const gid = uri_gid == null || uri_gid === '' ? createGUID() : uri_gid;
-  //   console.log('The group id is ' + gid);
-  //   setGroupId(gid);
-  //   return gid;
-  // };
-
-  const getGroupId = () => {
-    utils.getGroupID().then(response => {
-    return response;
-    });
-  }
-
   const getContent = () => {
+  
     if (page === 'home') {
       return (
         <HomeScreen
           startCallHandler={() => {
-            window.history.pushState({}, document.title, window.location.href + '?groupId=' + getGroupId());
+          setPage('configuration');         
           }}
         />
       );
     } else if (page === 'configuration') {
       return (
+        
         <ConfigurationScreen
           startCallHandler={() => setPage('call')}
           unsupportedStateHandler={() => setPage('error')}
           endCallHandler={() => setPage('endCall')}
-          groupId={getGroupId()}
+          groupIdPromise={utils.getGroupID()}
           userId={createUserId()}
           screenWidth={screenWidth}
         />
+       
+      
       );
     } else if (page === 'call') {
       return (
         <GroupCall
           endCallHandler={() => setPage('endCall')}
-          groupId={getGroupId()}
+          groupIdPromise={utils.getGroupID()}
           userId={createUserId()}
           screenWidth={screenWidth}
         />
@@ -108,16 +91,15 @@ const App = () => {
     }
   };
 
-  if (getGroupIdFromUrl() && page === 'home') {
-    setPage('configuration');
-  }
-
   if (utils.isMobileSession() || utils.isSmallScreen()) {
     console.log('ACS Calling sample: This is experimental behaviour');
   }
 
+
+
   return <Provider store={store}>{getContent()}</Provider>;
 };
+
 
 window.setTimeout(() => {
   try {

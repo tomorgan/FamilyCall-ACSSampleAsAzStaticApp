@@ -22,7 +22,7 @@ namespace ThoughtStuff.AzureCommsServices
 
         [FunctionName("getGroupId")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
 
@@ -30,7 +30,7 @@ namespace ThoughtStuff.AzureCommsServices
 
             if (String.IsNullOrEmpty(_groupID))
             {
-                _groupID = new Guid().ToString();
+                _groupID = Guid.NewGuid().ToString();
             }
 
             return new OkObjectResult(_groupID);

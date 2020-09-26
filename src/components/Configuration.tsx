@@ -23,9 +23,11 @@ import {
   verticalStackStyle
 } from './styles/Configuration.styles';
 
+
 export interface ConfigurationScreenProps {
   userId: string;
-  groupId: string;
+  groupIdPromise: Promise<string>;
+  
   callAgent: CallAgent;
   deviceManager: DeviceManager;
   setUserId(userId: string): void;
@@ -54,13 +56,17 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const [name, setName] = useState(props.userId);
   const [emptyWarning, setEmptyWarning] = useState(false);
 
-  const { userId, groupId, setUserId, initCallClient, setGroup, unsupportedStateHandler, endCallHandler } = props;
+  const { userId, groupIdPromise, setUserId, initCallClient, setGroup, unsupportedStateHandler, endCallHandler } = props;
 
   useEffect(() => {
     setUserId(userId);
     initCallClient(userId, unsupportedStateHandler, endCallHandler);
-    setGroup(groupId);
-  }, [userId, groupId, setUserId, initCallClient, setGroup, unsupportedStateHandler, endCallHandler]);
+    groupIdPromise.then(res => {
+  setGroup(res);
+  console.log("Group ID is "  + res);
+});   
+   
+  }, [userId, groupIdPromise, setUserId, initCallClient, setGroup, unsupportedStateHandler, endCallHandler]);
 
   return (
     <Stack className={mainContainerStyle} horizontalAlign="center" verticalAlign="center">

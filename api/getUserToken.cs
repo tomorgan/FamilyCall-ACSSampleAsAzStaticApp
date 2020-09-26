@@ -22,7 +22,7 @@ namespace ThoughtStuff.AzureCommsServices
 
         [FunctionName("getUserToken")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
            string userID = req.Query["userID"];

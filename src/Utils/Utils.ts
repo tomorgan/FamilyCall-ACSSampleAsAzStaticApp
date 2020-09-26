@@ -22,10 +22,10 @@ export const utils = {
     }
     throw new Error('Invalid token response');
   },
-  getGroupID: async (): Promise<any> => {
+  getGroupID: async (): Promise<string> => {
     const response = await fetch('/api/getGroupId');
     if (response.ok) {
-      return response.json();
+      return response.text();
     }
     throw new Error('Invalid token response');
   },
