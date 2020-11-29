@@ -25,13 +25,13 @@ namespace ThoughtStuff.AzureCommsServices
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-           string userID = req.Query["userID"];
-          CommunicationIdentityClient _client = new CommunicationIdentityClient(Environment.GetEnvironmentVariable("ACS_Connection_String"));
+           string code = req.Query["entryCode"];
+            string correctCode = Environment.GetEnvironmentVariable("EntryCode");
+            if (correctCode != null && code.ToLower() == correctCode.ToLower())
+            {
 
+             CommunicationIdentityClient _client = new CommunicationIdentityClient(Environment.GetEnvironmentVariable("ACS_Connection_String"));
 
-        log.LogInformation("API function processed a request." + userID);
-
-           
                 Response<CommunicationUser> userResponse = await _client.CreateUserAsync();
                 CommunicationUser user = userResponse.Value;
                 Response<CommunicationUserToken> tokenResponse =
@@ -39,6 +39,13 @@ namespace ThoughtStuff.AzureCommsServices
                 string token = tokenResponse.Value.Token;
                 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
                 return new OkObjectResult(tokenResponse);
+            }
+            else
+            {
+                Random rnd = new Random();
+                System.Threading.Thread.Sleep(rnd.Next(500,5000));
+                return new UnauthorizedResult();
+            }
             
             
         }

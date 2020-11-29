@@ -22,7 +22,7 @@ const mapStateToProps = (state: State, props: ConfigurationScreenProps) => ({
   videoDeviceList: state.devices.videoDeviceList,
   audioDeviceList: state.devices.audioDeviceList,
   cameraPermission: state.devices.cameraPermission,
-  microphonePermission: state.devices.microphonePermission
+  microphonePermission: state.devices.microphonePermission,  
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

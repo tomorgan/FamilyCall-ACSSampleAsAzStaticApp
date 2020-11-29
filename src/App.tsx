@@ -12,8 +12,10 @@ import ConfigurationScreen from './containers/Configuration';
 import { loadTheme, initializeIcons } from '@fluentui/react';
 import { utils } from './Utils/Utils';
 
+
 const sdkVersion = require('../package.json').dependencies['@azure/communication-calling'];
 const lastUpdated = `Last Updated ${utils.getBuildTime()} with @azure/communication-calling:${sdkVersion}`;
+
 
 loadTheme({});
 initializeIcons();
@@ -22,6 +24,8 @@ const store = createStore(reducer, applyMiddleware(thunk));
 const App = () => {
 const [page, setPage] = useState('home');
 const [screenWidth, setScreenWidth] = useState(0);
+
+
 
   useEffect(() => {
     const setWindowWidth = () => {
@@ -35,14 +39,18 @@ const [screenWidth, setScreenWidth] = useState(0);
 
   const createUserId = () => 'user' + Math.ceil(Math.random() * 1000);
 
+  
+
   const getContent = () => {
   
     if (page === 'home') {
+
       return (
         <HomeScreen
-          startCallHandler={() => {
-          setPage('configuration');         
+          startCallHandler={() => {           
+          setPage('configuration');                   
           }}
+         
         />
       );
     } else if (page === 'configuration') {
@@ -52,8 +60,8 @@ const [screenWidth, setScreenWidth] = useState(0);
           startCallHandler={() => setPage('call')}
           unsupportedStateHandler={() => setPage('error')}
           endCallHandler={() => setPage('endCall')}
-          groupIdPromise={utils.getGroupID()}
-          userId={createUserId()}
+          groupIdPromise={utils.getGroupID()}          
+          
           screenWidth={screenWidth}
         />
        

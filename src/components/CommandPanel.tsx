@@ -2,16 +2,12 @@ import React from 'react';
 import NewLocalSettings from './LocalSettings';
 import ParticipantStack from '../containers/ParticipantStack';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-import { Stack, Icon, PrimaryButton, TextField, Separator } from '@fluentui/react';
+import { Stack} from '@fluentui/react';
 import {
   fullHeightStyles,
-  paneFooterStyles,
-  paneFooterTokens,
-  textFieldStyles,
+
   paneHeaderStyle,
-  footerMainTextStyle,
-  copyLinkButtonStyle,
-  copyIconStyle,
+
   settingsContainerStyle,
   paneHeaderTextStyle
 } from './styles/CommandPanel.styles';
@@ -32,15 +28,9 @@ export enum CommandPanelTypes {
   Settings = 'Settings'
 }
 
-const copyJoinLink = () => {
-  const inputElement = document.getElementById('inputText') as HTMLInputElement;
-  inputElement.select();
-  document.execCommand('copy');
-};
-export default (props: CommandPanelProps): JSX.Element => {
-  const invitePeopleString = 'Invite people to join';
-  const copyJoinInfoString = 'Copy join info';
 
+export default (props: CommandPanelProps): JSX.Element => {
+  
   return (
     <Stack styles={fullHeightStyles}>
       <Stack.Item className={paneHeaderStyle}>
@@ -49,16 +39,7 @@ export default (props: CommandPanelProps): JSX.Element => {
       <Stack.Item styles={fullHeightStyles}>
         {props.selectedPane === CommandPanelTypes.People && (
           <Stack verticalAlign="space-between" styles={fullHeightStyles}>
-            <ParticipantStack />
-            <Stack styles={paneFooterStyles} tokens={paneFooterTokens}>
-              <Separator />
-              <div className={footerMainTextStyle}>{invitePeopleString}</div>
-              <TextField styles={textFieldStyles} id="inputText" type="text" value={`${document.baseURI}`}></TextField>
-              <PrimaryButton className={copyLinkButtonStyle} onClick={copyJoinLink}>
-                <Icon iconName="Copy" className={copyIconStyle} />
-                {copyJoinInfoString}
-              </PrimaryButton>
-            </Stack>
+            <ParticipantStack />           
           </Stack>
         )}
         {props.selectedPane === CommandPanelTypes.Settings && (

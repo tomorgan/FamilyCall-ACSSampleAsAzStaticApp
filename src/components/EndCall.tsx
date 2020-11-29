@@ -9,8 +9,7 @@ import {
   mainStackTokens,
   buttonsStackTokens,
   upperStackTokens,
-  videoCameraIconStyle,
-  bottomStackFooterStyle
+  videoCameraIconStyle  
 } from './styles/EndCall.styles';
 
 export interface EndCallProps {
@@ -35,10 +34,7 @@ export default (props: EndCallProps): JSX.Element => {
           <DefaultButton className={buttonStyle} onClick={props.homeHandler}>
             {goHomePage}
           </DefaultButton>
-        </Stack>
-        <div className={bottomStackFooterStyle}>
-          <a href="https://github.com/Azure/Communication/issues">Give Feedback</a>&nbsp;on this sample app on Github
-        </div>
+        </Stack>      
       </Stack>
     </Stack>
   );

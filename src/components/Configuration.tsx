@@ -1,7 +1,7 @@
 // © Microsoft Corporation. All rights reserved.
 
 import React, { useEffect, useState } from 'react';
-import { Stack, Spinner, PrimaryButton } from '@fluentui/react';
+import { Stack, PrimaryButton } from '@fluentui/react';
 import LocalPreview from './LocalPreview';
 import LocalSettings from './LocalSettings';
 import DisplayNameField from './DisplayNameField';
@@ -22,12 +22,13 @@ import {
   fullScreenStyle,
   verticalStackStyle
 } from './styles/Configuration.styles';
+import EntryCodeField from './EntryCodeField';
 
 
 export interface ConfigurationScreenProps {
   userId: string;
   groupIdPromise: Promise<string>;
-  
+  entryCode: string;
   callAgent: CallAgent;
   deviceManager: DeviceManager;
   setUserId(userId: string): void;
@@ -50,17 +51,21 @@ export interface ConfigurationScreenProps {
 }
 
 export default (props: ConfigurationScreenProps): JSX.Element => {
-  const spinnerLabel = 'Initializing call client...';
+  //const spinnerLabel = 'Initializing call client...';
   const buttonText = 'Start call';
+  const entryCodeButtonText = "Next";
 
   const [name, setName] = useState(props.userId);
   const [emptyWarning, setEmptyWarning] = useState(false);
+
+  const [entryCode, setEntryCodeName] = useState(props.entryCode);
+  const [emptyCodeWarning, setEmptyCodeWarning] = useState(false);
+  
 
   const { userId, groupIdPromise, setUserId, initCallClient, setGroup, unsupportedStateHandler, endCallHandler } = props;
 
   useEffect(() => {
     setUserId(userId);
-    initCallClient(userId, unsupportedStateHandler, endCallHandler);
     groupIdPromise.then(res => {
   setGroup(res);
   console.log("Group ID is "  + res);
@@ -87,6 +92,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           />
           <Stack className={localSettingsContainerStyle}>
             <DisplayNameField setName={setName} name={name} setEmptyWarning={setEmptyWarning} isEmpty={emptyWarning} />
+            
             <div>
               <LocalSettings
                 videoDeviceList={props.videoDeviceList}
@@ -107,6 +113,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
                     setEmptyWarning(false);
                     props.setUserId(name);
                     props.callAgent.updateDisplayName(name);
+                    initCallClient(entryCode, unsupportedStateHandler, endCallHandler);
                     props.startCallHandler();
                   }
                 }}
@@ -118,8 +125,25 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           </Stack>
         </Stack>
       ) : (
-        <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />
+        // <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />
+        <Stack>
+        <EntryCodeField setCode={setEntryCodeName} code={entryCode} setEmptyWarning={setEmptyCodeWarning} isEmpty={emptyCodeWarning} />
+        <PrimaryButton
+                className={buttonStyle}
+                onClick={() => {
+                  if (!entryCode) {
+                    setEmptyCodeWarning(true);
+                  } else {
+                    setEmptyCodeWarning(false);
+                    initCallClient(entryCode, unsupportedStateHandler, endCallHandler);                    
+                  }
+                }}
+              >                
+                {entryCodeButtonText}
+              </PrimaryButton>
+              </Stack>
       )}
+     
     </Stack>
   );
 };

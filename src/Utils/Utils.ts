@@ -15,8 +15,8 @@ export const utils = {
   getAppServiceUrl: (): string => {
     return window.location.origin;
   },
-  getTokenForUser: async (userId: string): Promise<any> => {
-    const response = await fetch('/api/getUserToken?userId='.concat(encodeURIComponent(userId)));
+  getTokenForUser: async (entryCode: string): Promise<any> => {
+    const response = await fetch('/api/getUserToken?entryCode='.concat(encodeURIComponent(entryCode)));
     if (response.ok) {
       return response.json();
     }
