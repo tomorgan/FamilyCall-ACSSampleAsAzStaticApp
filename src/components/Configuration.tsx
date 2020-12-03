@@ -113,7 +113,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
                     setEmptyWarning(false);
                     props.setUserId(name);
                     props.callAgent.updateDisplayName(name);
-                    initCallClient(entryCode, unsupportedStateHandler, endCallHandler);
+                  //  initCallClient(entryCode, unsupportedStateHandler, endCallHandler);
                     props.startCallHandler();
                   }
                 }}
