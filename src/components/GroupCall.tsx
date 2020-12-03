@@ -63,7 +63,7 @@ export default (props: GroupCallProps): JSX.Element => {
     if (callAgent && !call) {
       groupIdPromise.then(res => {
         joinGroup();
-        document.title = `Group ID ${res}`;
+        document.title = `In Call (${res})`;
         console.log("Group ID is "  + res);
       })
       
