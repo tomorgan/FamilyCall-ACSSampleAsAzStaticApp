@@ -1,68 +1,29 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Simple Family Call
 
-## Available Scripts
+## Azure Communication Services Group Calling features deployed as Azure Static Web App with Azure Functions
 
-In the project directory, you can run:
+This project builds heavily on this sample project:
 
-### `yarn start`
+[Azure Communication Services Group Calling Hero Sample](https://github.com/Azure-Samples/communication-services-web-calling-hero)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It takes the above sample, and makes it work with Azure Static Web Apps. It does this by implementing the back-end part (to get access keys etc) as API calls using Azure Functions, which are now [built right into Static Web Apps](https://docs.microsoft.com/en-us/azure/static-web-apps/add-api).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+This means that you can have your own group calling scenario up and running by deploying a single web app!
 
-### `yarn test`
+# How to deploy
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Step 1 - Create a Azure Communication Services instance
 
-### `yarn build`
+[Create a new Azure Communication Services instance]. Once it's created, go to Keys and make a note of one of the Connection Strings.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Step 2 - Deploy this code
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Click https://github.com/tomorgan/FamilyCall-ACSSampleAsAzStaticApp/generate
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In the Repository name box, enter the name you want for the project
 
-### `yarn eject`
+Click __Create repository from template__.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Step 3 - Create a Static Web App
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Create a new Azure Static Web App]. Once it's created, [follow the steps here](https://docs.microsoft.com/azure/static-web-apps/get-started-portal?tabs=vanilla-javascript#create-a-static-web-app) to connect your Static Web App to the repository you created in Step 2
