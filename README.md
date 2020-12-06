@@ -24,6 +24,44 @@ In the Repository name box, enter the name you want for the project
 
 Click __Create repository from template__.
 
-## Step 3 - Create a Static Web App
+## Step 3 - Create a Static Web App and link to this code
 
-[Create a new Azure Static Web App]. Once it's created, [follow the steps here](https://docs.microsoft.com/azure/static-web-apps/get-started-portal?tabs=vanilla-javascript#create-a-static-web-app) to connect your Static Web App to the repository you created in Step 2
+This step not only creates the Azure Static Web App in your Azure tenant, it also links it to the GitHub repository you just created. That means that the code will automatically be compiled and published for use by the Static Web App (without you needing to do any work!)
+
+1. Select your _Azure subscription_
+1. Select or create a new _Resource Group_
+1. Name the app       
+1. Select a _Region_ closest to you
+1. Select the **Free** _SKU_
+1. Select the **Sign-in with GitHub** button and authenticate with GitHub
+
+After you sign in with GitHub, enter the repository information.
+
+1. Select your preferred _Organization_
+1. Select the repository you just created from the _Repository_ drop-down
+1. Select **master** from the _Branch_ drop-down
+
+> [!NOTE]
+> If you don't see any repositories, you may need to authorize Azure Static Web Apps in GitHub. Browse to your GitHub repository and go to **Settings > Applications > Authorized OAuth Apps**, select **Azure Static Web Apps**, and then select **Grant**. For organization repositories, you must be an owner of the organization to grant the permissions.
+
+1. In the _Build Details_ section, set the following configuration details:
+
+    1. Select **Custom** from the _Build Presets_ dropdown
+    1. Keep the the default value in the _App location_ box
+    1. Make sure thaat the _Api location_ value is set to "/api"
+    1. Leave the _App artifact location_ box empty
+
+
+1. Select **Review + create**.
+
+1. Select **Create**.
+
+1. Select **Go to resource**.
+
+## Step 4 - Wait for it to fail and then make some changes
+
+The effect of joining your Static Web App to that GitHub repository is that it will kick-off a new build process to compile and deploy the code.
+
+You can see this happening by going back to GitHub, and choose the Actions section of your repository.
+
+
